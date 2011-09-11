@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+
+ This file is part of the Sylius package.
+
+ (c) Paweł Jędrzejewski
+ 
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+	<parameters>
+		<parameter key="sylius_theming.resolver.static.class">Sylius\Bundle\ThemingBundle\Resolver\StaticThemeResolver</parameter>
+		<parameter key="sylius_theming.resolver.dynamic.class">Sylius\Bundle\ThemingBundle\Resolver\DynamicThemeResolver</parameter>
+		<parameter key="sylius_theming.cache.class">Sylius\Bundle\ThemingBundle\Cache\FilesystemCache</parameter>
+		<parameter key="sylius_theming.locator.file.class">Sylius\Bundle\ThemingBundle\Locator\FileLocator</parameter>
+		<parameter key="sylius_theming.locator.template.class">Sylius\Bundle\ThemingBundle\Locator\TemplateLocator</parameter>
+	</parameters>
+
+    <services>
+    	<service id="sylius_theming.resolver.static" class="%sylius_theming.resolver.static.class%">
+    		<argument type="service" id="sylius_theming.manager.theme" />
+    		<argument type="service" id="sylius_theming.cache" />
+        </service>
+        <service id="sylius_theming.resolver.dynamic" class="%sylius_theming.resolver.dynamic.class%">
+    		<argument type="service" id="sylius_theming.manager.theme" />
+    		<argument type="service" id="sylius_theming.cache" />
+        </service>
+        <service id="sylius_theming.cache" class="%sylius_theming.cache.class%">
+        	<argument>%kernel.cache_dir%</argument>
+        </service>
+        <service id="sylius_theming.locator.file" class="%sylius_theming.locator.file.class%">
+        	<argument type="service" id="kernel" />
+        	<argument type="service" id="sylius_theming.resolver" />
+        	<argument>%kernel.root_dir%/Resources</argument>
+        </service>
+        <service id="sylius_theming.locator.template" class="%sylius_theming.locator.template.class%" public="false">
+            <argument type="service" id="sylius_theming.locator.file" />
+            <argument>%kernel.cache_dir%</argument>
+            <argument type="service" id="sylius_theming.resolver" />
+        </service>
+    </services>
+    
+</container>

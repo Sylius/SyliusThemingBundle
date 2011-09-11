@@ -1,0 +1,22 @@
+{% extends 'SyliusThemingBundle:Frontend:layout.html.twig' %}
+
+{% block content %}
+
+<h2>themes.</h2>
+
+{% for theme in themes %}
+
+    id: {{ theme.id }} <br />
+    name: {{ theme.name }} <br />
+    
+    <ul>
+        <li><a href="{{ path('sylius_theming_theme_activate', {'id': theme.id}) }}">activate</a></li>
+    </ul>
+    
+{% else %}
+
+    no themes...
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'SyliusThemingBundle:Backend:layout.html.twig' %}
+
+{% block content %}
+
+<h2>themes.</h2>
+
+id: {{ theme.id }} <br />
+name: {{ theme.name }} <br />
+version: {{ theme.version }} <br />
+description: <br />
+{{ theme.description }}
+
+<ul>
+    <li><a href="{{ path('sylius_theming_backend_theme_show', {'id': theme.id}) }}">details</a></li>
+    <li><a href="{{ path('sylius_theming_backend_theme_activate', {'id': theme.id}) }}">activate</a></li>
+    <li><a href="{{ path('sylius_theming_backend_theme_uninstall', {'id': theme.id}) }}">uninstall</a></li>
+    
+    {% if theme.enabled %}
+    
+        <li><a href="{{ path('sylius_theming_backend_theme_disable', {'id': theme.id}) }}">disable</a></li>
+        
+    {% else %}
+    
+        <li><a href="{{ path('sylius_theming_backend_theme_enable', {'id': theme.id}) }}">enable</a></li>
+        
+    {% endif %}
+</ul>
+
+{% endblock %}

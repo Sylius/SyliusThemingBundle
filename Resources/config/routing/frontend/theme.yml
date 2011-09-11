@@ -1,0 +1,7 @@
+sylius_theming_theme_list:
+    pattern: /themes
+    defaults: { _controller: sylius_theming.controller.frontend.theme:listAction }
+    
+sylius_theming_theme_activate:
+    pattern: /theme/{id}/activate
+    defaults: { _controller: sylius_theming.controller.frontend.theme:activateAction }

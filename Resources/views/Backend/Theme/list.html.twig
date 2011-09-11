@@ -1,0 +1,50 @@
+{% extends 'SyliusThemingBundle:Backend:layout.html.twig' %}
+
+{% block content %}
+
+<h2>themes.</h2>
+
+{% for theme in themes %}
+
+    id: {{ theme.id }} <br />
+    name: {{ theme.name }} <br />
+    
+    <ul>
+        <li><a href="{{ path('sylius_theming_backend_theme_show', {'id': theme.id}) }}">details</a></li>
+        <li><a href="{{ path('sylius_theming_backend_theme_activate', {'id': theme.id}) }}">activate</a></li>
+        <li><a href="{{ path('sylius_theming_backend_theme_uninstall', {'id': theme.id}) }}">uninstall</a></li>
+        
+        {% if theme.enabled %}
+        
+            <li><a href="{{ path('sylius_theming_backend_theme_disable', {'id': theme.id}) }}">disable</a></li>
+            
+        {% else %}
+        
+            <li><a href="{{ path('sylius_theming_backend_theme_enable', {'id': theme.id}) }}">enable</a></li>
+            
+        {% endif %}
+    </ul>
+    
+{% else %}
+
+    no themes...
+
+{% endfor %}
+
+<h2>theme packs.</h2>
+
+{% for pack in packs %}
+
+    name: {{ pack.name }} <br />
+    
+    <ul>
+        <li><a href="{{ path('sylius_theming_backend_theme_install', {'path': pack.encodedPath}) }}">install</a></li>
+    </ul>
+
+{% else %}
+
+    no theme packs to install...
+
+{% endfor %}
+
+{% endblock %}
