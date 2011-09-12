@@ -1,20 +1,21 @@
 SyliusThemingBundle documentation.
 =====================================
 
-This bundle is part of **Sylius e-commerce system**.
 Prototype version of bundle that add theming feature to any Symfony2 application.
 You can manage themes through a simple and customizable web interface.
-There are two theme resolvers built in, first one is static, that means the theme is activated only by admin in backend.
-The second is dynamic, that means the user can change the theme anytime they want.
 It is something like Styles in phpBB.
 Stay tuned and [follow me on twitter](http://twitter.com/pjedrzejewski) for updates.
 Have a nice read, and remember that it still lacks some of the important features.
+
+Thanks [@lsmith77](http://github.com/lsmith77) and [@stof](http://github.com/stof) for idea of integrating the bundles!
+The bundle extends from the awesome [LiipThemeBundle](http://github.com/liip/LiipThemeBundle).
 
 **Note!** This documentation is inspired by [FOSUserBundle docs](https://github.com/FriendsOfSymfony/FOSUserBundle/blob/master/Resources/doc/index.md).
 
 Installation.
 -------------
 
++ Installing dependencies.
 + Downloading the bundle.
 + Autoloader configuration.
 + Adding bundle to kernel.
@@ -24,6 +25,10 @@ Installation.
 + Testing.
 + Creating theme.
 + The pattern of locating files.
+
+### Installing depdencies.
+
+You need to first install the [LiipThemeBundle](http://github.com/liip/LiipThemeBundle).
 
 ### Downloading the bundle.
 
@@ -97,7 +102,6 @@ Open up your `config.yml` file and add this...
 ``` yaml
 sylius_theming:
     driver: ORM
-    directory: ../themes # Relative to kernel root dir.
     classes:
         model:
             theme: Sylius\Bundle\ThemingBundle\Entity\Theme
