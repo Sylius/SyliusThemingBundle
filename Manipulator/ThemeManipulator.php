@@ -11,6 +11,7 @@
 
 namespace Sylius\Bundle\ThemingBundle\Manipulator;
 
+use Sylius\Bundle\ThemingBundle\Cache\CacheInterface;
 use Sylius\Bundle\ThemingBundle\Model\ThemeManagerInterface;
 use Sylius\Bundle\ThemingBundle\Model\ThemeInterface;
 
@@ -29,14 +30,22 @@ class ThemeManipulator implements ThemeManipulatorInterface
     protected $themeManager;
     
     /**
+     * Cache.
+     * 
+     * @var CacheInterface
+     */
+    protected $cache;
+    
+    /**
      * Constructor.
      * 
      * @param ThemeManagerInterface 	$themeManager
      * @param SlugizerInterface 		$slugizer
      */
-    public function __construct(ThemeManagerInterface $themeManager)
+    public function __construct(ThemeManagerInterface $themeManager, CacheInterface $cache)
     {
         $this->themeManager = $themeManager;
+        $this->cache = $cache;
     }
     
     /**
@@ -46,6 +55,8 @@ class ThemeManipulator implements ThemeManipulatorInterface
     {
         $theme->incrementInstalledAt();
         $this->themeManager->persistTheme($theme);
+        
+        $this->cache->remove('sylius_theming.themes');
     }
     
 	/**
@@ -54,6 +65,8 @@ class ThemeManipulator implements ThemeManipulatorInterface
     public function uninstall(ThemeInterface $theme)
     {     
         $this->themeManager->removeTheme($theme);
+        
+        $this->cache->remove('sylius_theming.themes');
     }
     
     /**
@@ -63,6 +76,8 @@ class ThemeManipulator implements ThemeManipulatorInterface
     {
         $theme->setEnabled(true);
         $this->themeManager->persistTheme($theme);
+        
+        $this->cache->remove('sylius_theming.themes');
     }
     
    	/**
@@ -72,5 +87,14 @@ class ThemeManipulator implements ThemeManipulatorInterface
     {
         $theme->setEnabled(false);
         $this->themeManager->persistTheme($theme);
+        
+        $this->cache->remove('sylius_theming.themes');
+    }
+    
+    public function activate(ThemeInterface $theme)
+    {
+        $this->cache->set('sylius_theming.active_theme', $theme->getLogicalName());
+        
+        $this->enable($theme);
     }
 }

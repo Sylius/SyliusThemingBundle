@@ -18,6 +18,7 @@
     <services>
     	<service id="sylius_theming.manipulator.theme" class="%sylius_theming.manipulator.theme.class%">
     		<argument type="service" id="sylius_theming.manager.theme" />
+    		<argument type="service" id="sylius_theming.cache" />
     	</service>
     </services>
     

@@ -98,7 +98,7 @@ abstract class Theme implements ThemeInterface
         }
     }
     
-    public function loadConfiguration(array $configuration)
+    public function loadConfiguration($configuration)
     {
         $this->setName($configuration['name']);
         $this->setVersion($configuration['version']);

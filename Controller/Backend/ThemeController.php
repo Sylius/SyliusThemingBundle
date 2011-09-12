@@ -12,12 +12,9 @@
 namespace Sylius\Bundle\ThemingBundle\Controller\Backend;
 
 use RuntimeException;
-use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Sylius\Bundle\ThemingBundle\Model\ThemePack;
 use Sylius\Bundle\ThemingBundle\EventDispatcher\Event\FilterThemeEvent;
 use Sylius\Bundle\ThemingBundle\EventDispatcher\SyliusThemingEvents;
 
@@ -49,29 +46,8 @@ class ThemeController extends ContainerAware
      */
     public function listAction()
     {
-        $themeManager = $this->container->get('sylius_theming.manager.theme');
-        $themes = $themeManager->findThemes();
-        
-        $themesDir = $this->container->getParameter('sylius_theming.directory');
-        
-        if (!file_exists($themesDir)) {
-            throw new RuntimeException(sprintf('Themes dir "%s" does not exist!', $themesDir));
-        }
-        
-        $finder = new Finder();
-        $packsIterator = $finder->directories()->depth(0)->in($themesDir)->getIterator();
-        $packs = array();
-        $installedThemesPaths = array();
-        
-        foreach ($themes as $theme) {
-            $installedThemesPaths[] = $themesDir . '/' . $theme->getLogicalName();
-        }
-        
-        foreach ($packsIterator as $path) {
-            if (!in_array($path, $installedThemesPaths)) {
-                $packs[] = new ThemePack($path);
-            }
-        }
+        $themes = $this->container->get('sylius_theming.manager.theme')->findThemes(); 
+        $packs = $this->container->get('sylius_theming.packager')->findPacks($themes);
         
         return $this->container->get('templating')->renderResponse('SyliusThemingBundle:Backend/Theme:list.html.' . $this->getEngine(), array(
         	'themes'    => $themes,
@@ -85,14 +61,13 @@ class ThemeController extends ContainerAware
     public function installAction($path)
     {
         $path = base64_decode($path); 
-        $pack = new ThemePack($path);
+        $pack = $this->container->get('sylius_theming.packager')->createPack($path);
         
-        $theme = $pack->createTheme($this->container->get('sylius_theming.manager.theme')->createTheme());
+        $theme = $pack->buildTheme($this->container->get('sylius_theming.manager.theme')->createTheme());
         
         if (0 === count($this->container->get('validator')->validate($theme))) {
             $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_INSTALL, new FilterThemeEvent($theme));
             $this->container->get('sylius_theming.manipulator.theme')->install($theme);
-            $this->container->get('sylius_theming.cache')->remove('sylius_theming.themes');
             
             return new RedirectResponse($this->container->get('router')->generate('sylius_theming_backend_theme_list'));
         }
@@ -117,7 +92,6 @@ class ThemeController extends ContainerAware
         
         $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_UNINSTALL, new FilterThemeEvent($theme));
         $this->container->get('sylius_theming.manipulator.theme')->uninstall($theme);
-        $this->container->get('sylius_theming.cache')->remove('sylius_theming.themes');
         
         return new RedirectResponse($this->container->get('router')->generate('sylius_theming_backend_theme_list'));
     }
@@ -134,9 +108,7 @@ class ThemeController extends ContainerAware
         }
         
         $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_ACTIVATE, new FilterThemeEvent($theme));
-        $this->container->get('sylius_theming.manipulator.theme')->enable($theme);
-        $this->container->get('sylius_theming.cache')->remove('sylius_theming.themes');
-        $this->container->get('sylius_theming.cache')->set('sylius_theming.active_theme', $theme->getLogicalName());
+        $this->container->get('sylius_theming.manipulator.theme')->activate($theme);
         
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }
@@ -154,7 +126,6 @@ class ThemeController extends ContainerAware
         
         $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_ENABLE, new FilterThemeEvent($theme));
         $this->container->get('sylius_theming.manipulator.theme')->enable($theme);
-        $this->container->get('sylius_theming.cache')->remove('sylius_theming.themes');
         
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }
@@ -176,7 +147,6 @@ class ThemeController extends ContainerAware
         
         $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_DISABLE, new FilterThemeEvent($theme));
         $this->container->get('sylius_theming.manipulator.theme')->disable($theme);
-        $this->container->get('sylius_theming.cache')->remove('sylius_theming.themes');
         
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }

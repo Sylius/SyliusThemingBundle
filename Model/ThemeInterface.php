@@ -26,5 +26,5 @@ interface ThemeInterface
     function setEnabled($enabled);
     function getInstalledAt();  
     function incrementInstalledAt();
-    function loadConfiguration(array $configuration);
+    function loadConfiguration($configuration);
 }

@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Sylius\Bundle\ThemingBundle\Model;
+namespace Sylius\Bundle\ThemingBundle\Packager;
 
+use Sylius\Bundle\ThemingBundle\Model\ThemeInterface;
 use Symfony\Component\Yaml\Yaml;
 
 final class ThemePack
@@ -46,15 +47,15 @@ final class ThemePack
     }
     
     public function getConfiguration()
-    {    
-        if (null == $this->configuration) {
-            $this->configuration = Yaml::parse(file_get_contents($this->getPath() . '/theme.yml'));
+    {   
+        if (null == $this->configuration && file_exists($configFile = $this->getPath() . '/theme.yml')) {
+            $this->configuration = Yaml::parse(file_get_contents($configFile));
         }
         
         return $this->configuration;
     }
     
-    public function createTheme(ThemeInterface $theme)
+    public function buildTheme(ThemeInterface $theme)
     {
         $theme->loadConfiguration($this->getConfiguration());
         $theme->setLogicalName($this->getName());

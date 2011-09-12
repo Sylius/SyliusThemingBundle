@@ -17,8 +17,8 @@
 
 	<parameters>
 		<parameter key="sylius_theming.resolver.class">Sylius\Bundle\ThemingBundle\Resolver\ThemeResolver</parameter>
-		<parameter key="sylius_theming.resolver.dynamic.class">Sylius\Bundle\ThemingBundle\Resolver\DynamicThemeResolver</parameter>
 		<parameter key="sylius_theming.cache.class">Sylius\Bundle\ThemingBundle\Cache\FilesystemCache</parameter>
+		<parameter key="sylius_theming.packager.class">Sylius\Bundle\ThemingBundle\Packager\ThemePackager</parameter>
 	</parameters>
 
     <services>
@@ -28,6 +28,9 @@
         </service>
         <service id="sylius_theming.cache" class="%sylius_theming.cache.class%">
         	<argument>%kernel.cache_dir%</argument>
+        </service>
+        <service id="sylius_theming.packager" class="%sylius_theming.packager.class%">
+        	<argument>%sylius_theming.directory%</argument>
         </service>
     </services>
     

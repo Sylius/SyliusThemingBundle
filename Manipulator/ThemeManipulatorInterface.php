@@ -46,5 +46,12 @@ interface ThemeManipulatorInterface
      * 
      * @param ThemeInterface $theme
      */
-    function disable(ThemeInterface $theme);  
+    function disable(ThemeInterface $theme);
+    
+    /**
+     * Activates theme.
+     * 
+     * @param ThemeInterface $theme
+     */
+    function activate(ThemeInterface $theme);
 }
