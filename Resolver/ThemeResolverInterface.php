@@ -11,7 +11,7 @@
 
 namespace Sylius\Bundle\ThemingBundle\Resolver;
 
-use Sylius\Bundle\ThemingBundle\Model\ThemeInterface;
+use Liip\ThemeBundle\ActiveTheme;
 
 /**
  * Interface for theme resolver.
@@ -20,6 +20,5 @@ use Sylius\Bundle\ThemingBundle\Model\ThemeInterface;
  */
 interface ThemeResolverInterface
 {
-    function resolveActiveTheme();
-    function setActiveTheme(ThemeInterface $theme);
+    function resolveActiveTheme(ActiveTheme $activeTheme);
 }

@@ -4,14 +4,10 @@ About SyliusThemingBundle...
 This bundle is part of **Sylius e-commerce system**.
 Prototype version of bundle that add theming feature to any Symfony2 application.
 You can manage themes through a simple and customizable web interface.
-There are two theme resolvers built in, first one is static, that means the theme is activated only by admin in backend.
-The second is dynamic, that means the user can change the theme anytime they want.
-It is something like Styles in phpBB. **Docs are on their way...**
+It is something like Styles in phpBB.
 Stay tuned and [follow me on twitter](http://twitter.com/pjedrzejewski) for updates.
 
-**Note!**
-This bundle is **under heavy developement, it is not stable**.
-Some stuff was inspired by the [nice LiipThemeBundle](http://github.com/liip/LiipThemeBundle).
+The bundle extends from the awesome [LiipThemeBundle](http://github.com/liip/LiipThemeBundle).
 
 About project "Sylius".
 -----------------------
@@ -30,6 +26,11 @@ Documentation.
 
 Docs are available [here](https://github.com/Sylius/SyliusThemingBundle/blob/master/Resources/doc/index.md).
 
+Dependencies.
+-------------
+
+Thanks @lsmith and @stof for idea of integrating the bundles!
+The bundle extends from the awesome [LiipThemeBundle](http://github.com/liip/LiipThemeBundle).
 
 License.
 --------

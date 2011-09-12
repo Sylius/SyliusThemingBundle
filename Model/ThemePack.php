@@ -57,7 +57,7 @@ final class ThemePack
     public function createTheme(ThemeInterface $theme)
     {
         $theme->loadConfiguration($this->getConfiguration());
-        $theme->setRootDir($this->getPath());
+        $theme->setLogicalName($this->getName());
         
         return $theme;
     }

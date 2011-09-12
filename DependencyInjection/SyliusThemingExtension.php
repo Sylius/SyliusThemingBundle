@@ -49,19 +49,14 @@ class SyliusThemingExtension extends Extension
         $container->setParameter('sylius_theming.driver', $config['driver']);
         $container->setParameter('sylius_theming.engine', $config['engine']);
         
-        $container->setParameter('sylius_theming.directory', $container->getParameter('kernel.root_dir') . '/' .$config['directory']);
-        
-        $container->setAlias('sylius_theming.resolver', $config['resolver']);
+        $container->setParameter('sylius_theming.directory', $container->getParameter('kernel.root_dir') . '/Resources/themes');
 
         $configurations = array(
             'controllers',
             'manipulators',
+            'listeners',
             'theming'
         );
-        
-        if ($config['resolver'] == 'sylius_theming.resolver.dynamic') {
-            $configurations[] = 'listeners';
-        }
         
         foreach ($configurations as $basename) {
             $loader->load(sprintf('%s.xml', $basename));

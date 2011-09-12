@@ -20,9 +20,9 @@ abstract class Theme implements ThemeInterface
 {
     protected $id;
     protected $name;
+    protected $logicalName;
     protected $version;
     protected $description;
-    protected $rootDir;
     protected $enabled;
     protected $installedAt;
     
@@ -46,6 +46,16 @@ abstract class Theme implements ThemeInterface
         $this->name = $name;
     }
     
+    public function getLogicalName()
+    {
+        return $this->logicalName;
+    }
+    
+    public function setLogicalName($logicalName)
+    {
+        $this->logicalName = $logicalName;
+    }
+    
     public function getVersion()
     {
         return $this->version;
@@ -64,16 +74,6 @@ abstract class Theme implements ThemeInterface
     public function setDescription($description)
     {
         $this->description = $description;
-    }
-    
-    public function getRootDir()
-    {
-        return $this->rootDir;
-    }
-    
-    public function setRootDir($rootDir)
-    {
-        $this->rootDir = $rootDir;
     }
     
     public function isEnabled()

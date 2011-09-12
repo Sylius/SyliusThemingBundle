@@ -41,8 +41,6 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('driver')->cannotBeOverwritten()->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('engine')->defaultValue('twig')->end()
-                ->scalarNode('resolver')->defaultValue('sylius_theming.resolver.static')->end()
-                ->scalarNode('directory')->isRequired()->cannotBeEmpty()->end()
             ->end();
 
         $this->addClassesSection($rootNode);

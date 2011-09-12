@@ -16,12 +16,12 @@ interface ThemeInterface
     function getId();
     function getName();
     function setName($name);
+    function getLogicalName();
+    function setLogicalName($logicalName);
     function getVersion();
     function setVersion($version);
     function getDescription();
     function setDescription($description);
-    function getRootDir();
-    function setRootDir($rootDir);
     function isEnabled();
     function setEnabled($enabled);
     function getInstalledAt();  

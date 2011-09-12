@@ -11,7 +11,7 @@
 
 namespace Sylius\Bundle\ThemingBundle\Resolver;
 
-use Sylius\Bundle\ThemingBundle\Model\ThemeInterface;
+use Liip\ThemeBundle\ActiveTheme;
 use Sylius\Bundle\ThemingBundle\Cache\CacheInterface;
 use Sylius\Bundle\ThemingBundle\Model\ThemeManagerInterface;
 
@@ -20,13 +20,8 @@ use Sylius\Bundle\ThemingBundle\Model\ThemeManagerInterface;
  *
  * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
  */
-class StaticThemeResolver implements ThemeResolverInterface
+class ThemeResolver implements ThemeResolverInterface
 {
-    /**
-     * @var ThemeInterface
-     */
-    protected $activeTheme;
-    
     /**
      * Theme manager.
      * 
@@ -51,18 +46,25 @@ class StaticThemeResolver implements ThemeResolverInterface
         $this->cache = $cache;
     }
     
-    public function resolveActiveTheme()
+    public function resolveActiveTheme(ActiveTheme $activeTheme)
     {
-        if (null == $this->activeTheme && $this->cache->has('sylius_theming.theme')) {
-            $this->activeTheme = $this->cache->get('sylius_theming.theme');
-        }
+        if ($this->cache->has('sylius_theming.themes')) {
+            $activeTheme->setThemes($this->cache->get('sylius_theming.themes'));
+        } else {
+            $themes = $this->themeManager->findThemesBy(array('enabled' => true));
+            $themesLogicalNames = array();
+            
+            foreach ($themes as $theme) {
+                $themesLogicalNames[] = $theme->getLogicalName();
+            }
+            
+            $this->cache->set('sylius_theming.themes', $themesLogicalNames);
+            $activeTheme->setThemes($themesLogicalNames);
         
-        return $this->activeTheme;
-    }
-    
-    public function setActiveTheme(ThemeInterface $theme)
-    {
-        $this->cache->set('sylius_theming.theme', $theme);
-        $this->activeTheme = $theme;
+        }
+
+        if (null == $activeTheme->getName() && $this->cache->has('sylius_theming.active_theme')) {
+            $activeTheme->setName($this->cache->get('sylius_theming.active_theme'));
+        }
     }
 }

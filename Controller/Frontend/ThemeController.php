@@ -49,10 +49,9 @@ class ThemeController extends ContainerAware
         }
         
         $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_ACTIVATE, new FilterThemeEvent($theme));
-        $this->container->get('sylius_theming.resolver')->setActiveTheme($theme);
         
         $response = new RedirectResponse($this->container->get('router')->generate('sylius_theming_theme_list'));
-        $response->headers->setCookie(new Cookie('SYLIUS_THEMING_THEME', $theme->getId()));
+        $response->headers->setCookie(new Cookie($this->container->getParameter('liip_theme.theme_cookie'), $theme->getLogicalName()));
         
         return $response;
     }

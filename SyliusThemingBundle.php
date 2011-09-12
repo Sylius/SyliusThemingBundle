@@ -12,8 +12,6 @@
 namespace Sylius\Bundle\ThemingBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Sylius\Bundle\ThemingBundle\DependencyInjection\Compiler\ThemingPass;
 
 /**
  * This bundle replaces the default Symfony2 delegating engine.
@@ -22,9 +20,8 @@ use Sylius\Bundle\ThemingBundle\DependencyInjection\Compiler\ThemingPass;
  */
 class SyliusThemingBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function getParent()
     {
-        parent::build($container);
-        $container->addCompilerPass(new ThemingPass());
+        return 'LiipThemeBundle';
     }
 }

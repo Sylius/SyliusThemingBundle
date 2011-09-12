@@ -64,7 +64,7 @@ class ThemeController extends ContainerAware
         $installedThemesPaths = array();
         
         foreach ($themes as $theme) {
-            $installedThemesPaths[] = $theme->getRootDir();
+            $installedThemesPaths[] = $themesDir . '/' . $theme->getLogicalName();
         }
         
         foreach ($packsIterator as $path) {
@@ -92,6 +92,7 @@ class ThemeController extends ContainerAware
         if (0 === count($this->container->get('validator')->validate($theme))) {
             $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_INSTALL, new FilterThemeEvent($theme));
             $this->container->get('sylius_theming.manipulator.theme')->install($theme);
+            $this->container->get('sylius_theming.cache')->remove('sylius_theming.themes');
             
             return new RedirectResponse($this->container->get('router')->generate('sylius_theming_backend_theme_list'));
         }
@@ -110,8 +111,13 @@ class ThemeController extends ContainerAware
             throw new NotFoundHttpException('Requested theme does not exist.');
         }
         
+        if ($theme->getLogicalName() === $this->container->get('liip_theme.active_theme')->getName()) {
+            $this->container->get('sylius_theming.cache')->remove('sylius_theming.active_theme');
+        }
+        
         $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_UNINSTALL, new FilterThemeEvent($theme));
         $this->container->get('sylius_theming.manipulator.theme')->uninstall($theme);
+        $this->container->get('sylius_theming.cache')->remove('sylius_theming.themes');
         
         return new RedirectResponse($this->container->get('router')->generate('sylius_theming_backend_theme_list'));
     }
@@ -128,7 +134,9 @@ class ThemeController extends ContainerAware
         }
         
         $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_ACTIVATE, new FilterThemeEvent($theme));
-        $this->container->get('sylius_theming.resolver')->setActiveTheme($theme);
+        $this->container->get('sylius_theming.manipulator.theme')->enable($theme);
+        $this->container->get('sylius_theming.cache')->remove('sylius_theming.themes');
+        $this->container->get('sylius_theming.cache')->set('sylius_theming.active_theme', $theme->getLogicalName());
         
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }
@@ -146,6 +154,7 @@ class ThemeController extends ContainerAware
         
         $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_ENABLE, new FilterThemeEvent($theme));
         $this->container->get('sylius_theming.manipulator.theme')->enable($theme);
+        $this->container->get('sylius_theming.cache')->remove('sylius_theming.themes');
         
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }
@@ -161,8 +170,13 @@ class ThemeController extends ContainerAware
             throw new NotFoundHttpException('Requested theme does not exist.');
         }
         
+        if ($theme->getLogicalName() === $this->container->get('liip_theme.active_theme')->getName()) {
+            $this->container->get('sylius_theming.cache')->remove('sylius_theming.active_theme');
+        }
+        
         $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_DISABLE, new FilterThemeEvent($theme));
         $this->container->get('sylius_theming.manipulator.theme')->disable($theme);
+        $this->container->get('sylius_theming.cache')->remove('sylius_theming.themes');
         
         return new RedirectResponse($this->container->get('request')->headers->get('referer'));
     }

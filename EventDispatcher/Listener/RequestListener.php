@@ -11,9 +11,10 @@
 
 namespace Sylius\Bundle\ThemingBundle\EventDispatcher\Listener;
 
+use Liip\ThemeBundle\ActiveTheme;
+use Sylius\Bundle\ThemingBundle\Resolver\ThemeResolverInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Sylius\Bundle\ThemingBundle\Resolver\DynamicThemeResolver;
 
 /**
  * Listens to the request and changes the active theme based on a cookie.
@@ -24,9 +25,10 @@ class RequestListener
 {
     protected $resolver;
     
-    public function __construct(DynamicThemeResolver $resolver)
+    public function __construct(ThemeResolverInterface $resolver, ActiveTheme $activeTheme)
     {
         $this->resolver = $resolver;
+        $this->activeTheme = $activeTheme;
     }
 
     /**
@@ -34,10 +36,6 @@ class RequestListener
      */
      public function onKernelRequest(GetResponseEvent $event)
      {
-         if(HttpKernelInterface::MASTER_REQUEST === $event->getRequestType()) {
-            if(!$event->getRequest()->isXmlHttpRequest()) {
-                $this->resolver->setActiveThemeId($event->getRequest()->cookies->get('SYLIUS_THEMING_THEME'));
-            }
-        }
+         $this->resolver->resolveActiveTheme($this->activeTheme);
      }
 }

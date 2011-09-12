@@ -22,7 +22,8 @@
     <services>
         <service id="sylius_theming.listener.request" class="%sylius_theming.listener.request.class%">
         	<argument type="service" id="sylius_theming.resolver" />
-            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+        	<argument type="service" id="liip_theme.active_theme" />
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="10" />
         </service>
     </services>
 

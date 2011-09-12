@@ -23,9 +23,9 @@
         </id>
         
         <field name="name" column="name" type="string" length="255" />
+        <field name="logicalName" column="logical_name" type="string" length="255" />
         <field name="version" column="version" type="string" length="255" />
         <field name="description" column="description" type="text" />
-        <field name="rootDir" column="root_dir" type="string" length="255" />
         <field name="enabled" column="enabled" type="boolean" />
         <field name="installedAt" column="installed_at" type="datetime" />
 
