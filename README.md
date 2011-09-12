@@ -29,7 +29,7 @@ Docs are available [here](https://github.com/Sylius/SyliusThemingBundle/blob/mas
 Dependencies.
 -------------
 
-Thanks @lsmith and @stof for idea of integrating the bundles!
+Thanks [@lsmith77](http://github.com/lsmith77) and [@stof](http://github.com/stof) for idea of integrating the bundles!
 The bundle extends from the awesome [LiipThemeBundle](http://github.com/liip/LiipThemeBundle).
 
 License.
