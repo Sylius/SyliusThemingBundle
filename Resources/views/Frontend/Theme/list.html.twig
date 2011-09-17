@@ -1,22 +1,37 @@
-{% extends 'SyliusThemingBundle:Frontend:layout.html.twig' %}
+{% extends 'SyliusThemingBundle::layout.html.twig' %}
 
 {% block content %}
 
-<h2>themes.</h2>
+<h2>Frontend theme selection.</h2>
 
-{% for theme in themes %}
+{% if themes %}
 
-    id: {{ theme.id }} <br />
-    name: {{ theme.name }} <br />
+<table>
+    <thead>
+        <tr>
+            <th>#id</th>
+            <th>name</th>
+            <th>options</th>
+        </tr>
+    </thead>
     
-    <ul>
-        <li><a href="{{ path('sylius_theming_theme_activate', {'id': theme.id}) }}">activate</a></li>
-    </ul>
-    
+    <tbody>
+    {% for theme in themes %}
+        <tr>
+            <td>{{ theme.id }}</td>
+            <td>{{ theme.name }}</td>
+            <td>
+                <a href="{{ path('sylius_theming_theme_activate', {'id': theme.id}) }}" class="btn primary">activate</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
 {% else %}
-
-    no themes...
-
-{% endfor %}
+    <div class="alert-message info">
+      <p><strong>Info!</strong> No installed themes.</p>
+    </div>
+{% endif %}
 
 {% endblock %}

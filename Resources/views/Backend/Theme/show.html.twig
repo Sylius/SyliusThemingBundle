@@ -1,29 +1,40 @@
-{% extends 'SyliusThemingBundle:Backend:layout.html.twig' %}
+{% extends 'SyliusThemingBundle::layout.html.twig' %}
 
 {% block content %}
 
-<h2>themes.</h2>
+<div class="page-header"> 
+    <h1>Theme details.</h1> 
+</div>
 
-id: {{ theme.id }} <br />
-name: {{ theme.name }} <br />
-version: {{ theme.version }} <br />
-description: <br />
-{{ theme.description }}
-
-<ul>
-    <li><a href="{{ path('sylius_theming_backend_theme_show', {'id': theme.id}) }}">details</a></li>
-    <li><a href="{{ path('sylius_theming_backend_theme_activate', {'id': theme.id}) }}">activate</a></li>
-    <li><a href="{{ path('sylius_theming_backend_theme_uninstall', {'id': theme.id}) }}">uninstall</a></li>
+<table>
+    <thead>
+        <tr>
+            <th>#id</th>
+            <th>name</th>
+            <th>description</th>
+            <th>version</th>
+            <th>options</th>
+        </tr>
+    </thead>
     
-    {% if theme.enabled %}
-    
-        <li><a href="{{ path('sylius_theming_backend_theme_disable', {'id': theme.id}) }}">disable</a></li>
-        
-    {% else %}
-    
-        <li><a href="{{ path('sylius_theming_backend_theme_enable', {'id': theme.id}) }}">enable</a></li>
-        
-    {% endif %}
-</ul>
+    <tbody>
+        <tr>
+            <td>{{ theme.id }}</td>
+            <td>{{ theme.name }}</td>
+            <td>{{ theme.description }}</td>
+            <td><span class="label notice">{{ theme.version }}</span></td>
+            <td>
+                <a href="{{ path('sylius_theming_backend_theme_activate', {'id': theme.id}) }}" class="btn primary">activate</a>
+                <a href="{{ path('sylius_theming_backend_theme_show', {'id': theme.id}) }}" class="btn">details</a>              
+                {% if theme.enabled %}
+                    <a href="{{ path('sylius_theming_backend_theme_disable', {'id': theme.id}) }}" class="btn">disable</a>
+                {% else %}
+                    <a href="{{ path('sylius_theming_backend_theme_enable', {'id': theme.id}) }}" class="btn">enable</a>
+                {% endif %}
+                <a href="{{ path('sylius_theming_backend_theme_uninstall', {'id': theme.id}) }}"class="btn danger">uninstall</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 {% endblock %}
