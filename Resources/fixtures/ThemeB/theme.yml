@@ -2,7 +2,8 @@
 # Sample theme, B.
 #
 
-name: Theme B!
-version: 0.1
-description: |
-    Simple theme for testing purposes.
+theme:
+    name: Theme B!
+    version: 0.1
+    description: |
+        Simple theme for testing purposes.

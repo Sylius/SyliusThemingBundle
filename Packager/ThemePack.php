@@ -11,9 +11,16 @@
 
 namespace Sylius\Bundle\ThemingBundle\Packager;
 
+use Symfony\Component\Config\Definition\Processor;
+
 use Sylius\Bundle\ThemingBundle\Model\ThemeInterface;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Theme pack.
+ *
+ * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
+ */
 final class ThemePack
 {
     private $path;
@@ -48,8 +55,14 @@ final class ThemePack
     
     public function getConfiguration()
     {   
-        if (null == $this->configuration && file_exists($configFile = $this->getPath() . '/theme.yml')) {
-            $this->configuration = Yaml::parse(file_get_contents($configFile));
+        if (null == $this->configuration) {
+            
+            if (!file_exists($configFile = $this->getPath() . '/theme.yml')) {
+                throw new RuntimeException(sprintf('The theme configuration file "%s" does not exist.', $configFile));
+            }
+
+            $processor = new Processor();
+            $this->configuration = $processor->processConfiguration(new Configuration, Yaml::parse(file_get_contents($configFile)));
         }
         
         return $this->configuration;
