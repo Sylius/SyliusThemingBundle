@@ -1,27 +1,27 @@
 sylius_theming_backend_theme_enable:
-    pattern: /theme/{id}/enable
+    pattern: /{id}/enable
     defaults: { _controller: sylius_theming.controller.backend.theme:enableAction }
     
 sylius_theming_backend_theme_disable:
-    pattern: /theme/{id}/disable
+    pattern: /{id}/disable
     defaults: { _controller: sylius_theming.controller.backend.theme:disableAction }
     
 sylius_theming_backend_theme_list:
-    pattern: /themes
+    pattern: /list
     defaults: { _controller: sylius_theming.controller.backend.theme:listAction }
     
 sylius_theming_backend_theme_activate:
-    pattern: /theme/{id}/activate
+    pattern: /{id}/activate
     defaults: { _controller: sylius_theming.controller.backend.theme:activateAction }
 
 sylius_theming_backend_theme_uninstall:
-    pattern: /theme/{id}/uninstall
+    pattern: /{id}/uninstall
     defaults: { _controller: sylius_theming.controller.backend.theme:uninstallAction }
 
 sylius_theming_backend_theme_install:
-    pattern: /theme/{path}/install
+    pattern: /{path}/install
     defaults: { _controller: sylius_theming.controller.backend.theme:installAction }
 
 sylius_theming_backend_theme_show:
-    pattern: /theme/{id}
+    pattern: /{id}
     defaults: { _controller: sylius_theming.controller.backend.theme:showAction }
