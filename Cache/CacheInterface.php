@@ -32,7 +32,7 @@ interface CacheInterface
      *
      * @param string $key A unique key
      *
-     * @return string|null The value in the cache
+     * @return string|null The value in the cache or null if not found
      */
     function get($key);
 

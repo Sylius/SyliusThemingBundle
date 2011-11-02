@@ -64,22 +64,15 @@ class SyliusThemingExtension extends Extension
 
         $this->remapParametersNamespaces($config['classes'], $container, array(
             'model'          => 'sylius_theming.model.%s.class',
-            'manipulator'	 => 'sylius_theming.manipulator.%s.class',
+            'manipulator'    => 'sylius_theming.manipulator.%s.class',
         ));
         
         $this->remapParametersNamespaces($config['classes']['controller'], $container, array(
-            'backend'      => 'sylius_theming.controller.backend.%s.class',
-            'frontend'	   => 'sylius_theming.controller.frontend.%s.class'
+            'backend'     => 'sylius_theming.controller.backend.%s.class',
+            'frontend'    => 'sylius_theming.controller.frontend.%s.class'
         ));
     }
     
-	/**
-     * Remap parameters.
-     * 
-     * @param $config
-     * @param ContainerBuilder $container
-     * @param $map
-     */
     protected function remapParameters(array $config, ContainerBuilder $container, array $map)
     {
         foreach ($map as $name => $paramName) {
@@ -89,13 +82,6 @@ class SyliusThemingExtension extends Extension
         }
     }
 
-    /**
-     * Remap parameter namespaces.
-     * 
-     * @param $config
-     * @param ContainerBuilder $container
-     * @param $map
-     */
     protected function remapParametersNamespaces(array $config, ContainerBuilder $container, array $namespaces)
     {
         foreach ($namespaces as $ns => $map) {
