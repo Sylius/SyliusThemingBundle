@@ -70,7 +70,7 @@ This versioning method is same for all **Sylius** bundles and applications.
 License.
 --------
 
-Licence can be found [here](https://github.com/Sylius/SyliusThemingBundle/blob/master/Resources/meta/LICENCE).
+License can be found [here](https://github.com/Sylius/SyliusThemingBundle/blob/master/Resources/meta/LICENSE).
 
 Authors.
 --------
