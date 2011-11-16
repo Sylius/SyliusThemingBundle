@@ -1,0 +1,11 @@
+.buildpath
+.project
+.settings/
+phpunit.xml
+Tests/autoload.php
+nbproject
+
+vendor/doctrine
+vendor/doctrine-common
+vendor/doctrine-dbal
+vendor/symfony
