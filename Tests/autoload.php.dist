@@ -4,12 +4,12 @@
  * Autoloader for tests.
  */
 
+if (!file_exists($file = __DIR__.'/../vendor/.composer/autoload.php')) {
+
 $vendorDir = __DIR__.'/../vendor';
 require_once $vendorDir.'/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
-use Symfony\Component\ClassLoader\UniversalClassLoader;
-
-$loader = new UniversalClassLoader();
+$loader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
 $loader->registerNamespaces(array(
     'Symfony'                => array($vendorDir.'/symfony/src', $vendorDir.'/bundles'),
     'Doctrine\\Common'       => $vendorDir.'/doctrine-common/lib',
@@ -18,6 +18,10 @@ $loader->registerNamespaces(array(
 ));
 
 $loader->register();
+
+} else {
+	require_once $file;
+}
 
 spl_autoload_register(function($class) {
     if (0 === strpos($class, 'Sylius\\Bundle\\ThemingBundle\\')) {

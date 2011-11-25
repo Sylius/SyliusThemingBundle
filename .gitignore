@@ -4,8 +4,7 @@
 phpunit.xml
 Tests/autoload.php
 nbproject
+vendor/
+composer.phar
+composer.lock
 
-vendor/doctrine
-vendor/doctrine-common
-vendor/doctrine-dbal
-vendor/symfony

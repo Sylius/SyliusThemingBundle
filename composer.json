@@ -1,0 +1,30 @@
+{
+    "name": "sylius/theming-bundle",
+    "type": "symfony-bundle",
+    "description": "Sylius theming bundle. Installable themes for your Symfony2 application.",
+    "keywords": ["theme", "themes", "theming"],
+    "homepage": "http://sylius.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Paweł Jędrzejewski",
+            "email": "pjedrzejewski@diweb.pl"
+        },
+        {
+            "name": "Community contributions",
+            "homepage": "https://github.com/Sylius/SyliusThemingBundle/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "liip/theme-bundle": "*",
+        "symfony/symfony": "2.*"
+    },
+    "suggest": {
+        "symfony/doctrine-bundle": "*"
+    },
+    "autoload": {
+        "psr-0": { "Sylius\\Bundle\\ThemingBundle": "" }
+    },
+    "target-dir": "Sylius/Bundle/ThemingBundle"
+}

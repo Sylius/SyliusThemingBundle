@@ -17,8 +17,6 @@ use Symfony\Component\Yaml\Parser;
 
 class SyliusThemingExtensionTest extends \PHPUnit_Framework_TestCase
 {
-    protected $configuration;
-
     /**
      * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
@@ -46,10 +44,5 @@ EOF;
         $parser = new Parser();
 
         return $parser->parse($yaml);
-    }
-
-    protected function tearDown()
-    {
-        unset($this->configuration);
     }
 }

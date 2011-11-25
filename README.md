@@ -5,15 +5,34 @@ Prototype version of bundle that adds theming feature to any Symfony2 applicatio
 You can manage themes through a simple and customizable web interface.
 It is like Styles feature in phpBB.
 
-
 Stay tuned and [follow me on twitter](http://twitter.com/pjedrzejewski) for updates.
 
 The bundle extends the awesome [LiipThemeBundle](http://github.com/liip/LiipThemeBundle).
+
+[![Build status...](https://secure.travis-ci.org/Sylius/SyliusThemingBundle.png)](http://travis-ci.org/Sylius/SyliusThemingBundle)
 
 Sylius.
 -------
 
 **Sylius** is simple but **end-user and developer friendly** webshop engine built on top of Symfony2. Visit [sylius.org](http://sylius.org).
+
+Testing and build status.
+-------------------------
+
+This bundle uses [travis-ci.org](http://travis-ci.org/Sylius/SyliusThemingBundle) for CI.
+
+Before running tests, load the dependencies using [Composer](http://packagist.org).
+
+``` bash
+$ wget http://getcomposer.org/composer.phar
+$ php composer.phar install
+```
+
+Now you can test by simply using this command.
+
+``` bash
+$ phpunit
+```
 
 Examples.
 ---------
