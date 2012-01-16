@@ -1,20 +1,25 @@
-About SyliusThemingBundle...
-=================================
+SyliusThemingBundle.
+====================
 
-Prototype version of bundle that adds theming feature to any Symfony2 application.
-You can manage themes through a simple and customizable web interface.
-It is like Styles feature in phpBB.
-
-Stay tuned and [follow me on twitter](http://twitter.com/pjedrzejewski) for updates.
-
-The bundle extends the awesome [LiipThemeBundle](http://github.com/liip/LiipThemeBundle).
+Theming feature for your Symfony2 applications.
+You can manage themes through a simple and customizable web interface. It's like Styles feature in phpBB.
+But it gives you even more, many theme loaders, store themes in *.tar*, *.zip*, remotely on GitHub or any themes gallery.
+Interfaces allow you to implement custom loaders, packagers, everything is customizable thanks to Symfony container.
+Two theme resolvers supported, you can define theme in backend or allow users to switch between enabled themes.
 
 [![Build status...](https://secure.travis-ci.org/Sylius/SyliusThemingBundle.png)](http://travis-ci.org/Sylius/SyliusThemingBundle)
 
 Sylius.
 -------
 
-**Sylius** is simple but **end-user and developer friendly** webshop engine built on top of Symfony2. Visit [sylius.org](http://sylius.org).
+**Sylius** is simple but **end-user and developer friendly** webshop engine built on top of Symfony2. 
+
+Please visit [Sylius.org](http://sylius.org) for more details.
+
+Demo.
+-----
+
+There is a live demo of this bundle [on our official website](http://sylius.org/sandbox).
 
 Testing and build status.
 -------------------------
@@ -28,34 +33,37 @@ $ wget http://getcomposer.org/composer.phar
 $ php composer.phar install
 ```
 
-Now you can test by simply using this command.
+Now you can run the tests by simply using this command.
 
 ``` bash
 $ phpunit
 ```
 
-Examples.
----------
+Code examples.
+--------------
 
-If you want to see this and other bundles in action, try out the [Sylius sandbox application](http://github.com/Sylius/Sylius-Sandbox).
+If you want to see working implementation, try out the [Sylius sandbox application](http://github.com/Sylius/Sylius-Sandbox).
 It's open sourced github project.
 
 Documentation.
 --------------
 
-Docs are available [here](https://github.com/Sylius/SyliusThemingBundle/blob/master/Resources/doc/index.md).
+Documentation is available on [Sylius.org](http://sylius.org/docs/bundles/SyliusThemingBundle.html).
 
-Dependencies.
+Contributing.
 -------------
 
-Thanks [@lsmith77](http://github.com/lsmith77) and [@stof](http://github.com/stof) for idea of integrating the bundles!
-The bundle extends the awesome [LiipThemeBundle](http://github.com/liip/LiipThemeBundle).
+All informations about contributing to Sylius can be found on [this page](http://sylius.org/docs/contributing/index.html).
 
 Mailing lists.
 --------------
 
+### Users.
+
 If you are using this bundle and have any questions, feel free to ask on users mailing list.
 [Mail](mailto:sylius@googlegroups.com) or [view it](http://groups.google.com/group/sylius).
+
+### Developers.
 
 If you want to contribute, and develop this bundle, use the developers mailing list.
 [Mail](mailto:sylius-dev@googlegroups.com) or [view it](http://groups.google.com/group/sylius-dev).
@@ -63,7 +71,7 @@ If you want to contribute, and develop this bundle, use the developers mailing l
 Sylius twitter account.
 -----------------------
 
-If you want to keep up with updates, [follow the official Sylius account on twitter](http://twitter.com/_Sylius) 
+If you want to keep up with updates, [follow the official Sylius account on twitter](http://twitter.com/_Sylius)
 or [follow me](http://twitter.com/pjedrzejewski).
 
 Bug tracking.
@@ -75,7 +83,7 @@ If you have found bug, please create an issue.
 Versioning.
 -----------
 
-Releases will be numbered with the format `<major>.<minor>.<patch>`.
+Releases will be numbered with the format `major.minor.patch`.
 
 And constructed with the following guidelines.
 
@@ -84,6 +92,7 @@ And constructed with the following guidelines.
 * Bug fixes and misc changes bump the patch.
 
 For more information on SemVer, please visit [semver.org website](http://semver.org/).
+
 This versioning method is same for all **Sylius** bundles and applications.
 
 License.
