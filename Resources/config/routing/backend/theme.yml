@@ -1,26 +1,29 @@
+# This file is part of the Sylius package.
+# (c) Paweł Jędrzejewski
+
+sylius_theming_backend_theme_switch:
+    pattern: /{id}/switch
+    defaults: { _controller: sylius_theming.controller.backend.theme:switchAction }
+
 sylius_theming_backend_theme_enable:
     pattern: /{id}/enable
     defaults: { _controller: sylius_theming.controller.backend.theme:enableAction }
-    
+
 sylius_theming_backend_theme_disable:
     pattern: /{id}/disable
     defaults: { _controller: sylius_theming.controller.backend.theme:disableAction }
-    
-sylius_theming_backend_theme_list:
-    pattern: /list
-    defaults: { _controller: sylius_theming.controller.backend.theme:listAction }
-    
-sylius_theming_backend_theme_activate:
-    pattern: /{id}/activate
-    defaults: { _controller: sylius_theming.controller.backend.theme:activateAction }
+
+sylius_theming_backend_theme_install:
+    pattern: /{path}/install
+    defaults: { _controller: sylius_theming.controller.backend.theme:installAction }
 
 sylius_theming_backend_theme_uninstall:
     pattern: /{id}/uninstall
     defaults: { _controller: sylius_theming.controller.backend.theme:uninstallAction }
 
-sylius_theming_backend_theme_install:
-    pattern: /{path}/install
-    defaults: { _controller: sylius_theming.controller.backend.theme:installAction }
+sylius_theming_backend_theme_list:
+    pattern: /list
+    defaults: { _controller: sylius_theming.controller.backend.theme:listAction }
 
 sylius_theming_backend_theme_show:
     pattern: /{id}

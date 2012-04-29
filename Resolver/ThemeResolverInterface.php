@@ -11,7 +11,8 @@
 
 namespace Sylius\Bundle\ThemingBundle\Resolver;
 
-use Liip\ThemeBundle\ActiveTheme;
+use Sylius\Bundle\ThemingBundle\Model\ThemeInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Interface for theme resolver.
@@ -20,5 +21,18 @@ use Liip\ThemeBundle\ActiveTheme;
  */
 interface ThemeResolverInterface
 {
-    function resolveActiveTheme(ActiveTheme $activeTheme);
+    /**
+     * Resolves current theme.
+     * Can do it basing on current request.
+     *
+     * @param Request $request
+     */
+    function resolveActiveTheme(Request $request);
+
+    /**
+     * Switch active theme.
+     *
+     * @param ThemeInterface $theme
+     */
+    function switchActiveTheme(ThemeInterface $theme);
 }

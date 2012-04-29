@@ -14,14 +14,30 @@ namespace Sylius\Bundle\ThemingBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * This bundle replaces the default Symfony2 delegating engine.
- * 
+ * Rich featured theming for end-user Symfony2 applications.
+ * If you need just to theme your app as a developer,
+ * please consider using LiipThemeBundle.
+ * It is simpler and probably will fit your needs.
+ *
  * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
  */
 class SyliusThemingBundle extends Bundle
 {
-    public function getParent()
+    // Bundle driver list.
+    const DRIVER_DOCTRINE_ORM         = 'doctrine/orm';
+    const DRIVER_DOCTRINE_MONGODB_ODM = 'doctrine/mongodb-odm';
+    const DRIVER_DOCTRINE_COUCHDB_ODM = 'doctrine/couchdb-odm';
+    const DRIVER_PROPEL               = 'propel';
+
+    /**
+     * Return array with currently supported drivers.
+     *
+     * @return array
+     */
+    static public function getSupportedDrivers()
     {
-        return 'LiipThemeBundle';
+        return array(
+            self::DRIVER_DOCTRINE_ORM
+        );
     }
 }

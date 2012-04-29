@@ -1,9 +1,0 @@
-#
-# Sample theme, B.
-#
-
-theme:
-    name: Theme B!
-    version: 0.1
-    description: |
-        Simple theme for testing purposes.

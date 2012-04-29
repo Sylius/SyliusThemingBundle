@@ -11,9 +11,9 @@
 
 namespace Sylius\Bundle\ThemingBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * This class contains the configuration information for the bundle.
@@ -26,9 +26,7 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * Generates the configuration tree.
-     *
-     * @return \Symfony\Component\DependencyInjection\Configuration\NodeInterface
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
@@ -38,8 +36,8 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('driver')->cannotBeOverwritten()->isRequired()->cannotBeEmpty()->end()
-                ->scalarNode('engine')->defaultValue('twig')->end()
+                ->scalarNode('driver')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('engine')->defaultValue('twig')->cannotBeEmpty()->end()
             ->end();
 
         $this->addClassesSection($rootNode);
@@ -49,7 +47,7 @@ class Configuration implements ConfigurationInterface
 
     /**
      * Adds `classes` section.
-     * 
+     *
      * @param ArrayNodeDefinition $node
      */
     private function addClassesSection(ArrayNodeDefinition $node)
@@ -91,6 +89,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
     }
 }

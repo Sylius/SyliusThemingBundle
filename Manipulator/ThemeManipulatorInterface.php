@@ -15,43 +15,36 @@ use Sylius\Bundle\ThemingBundle\Model\ThemeInterface;
 
 /**
  * Theme manipulator interface.
- * 
+ *
  * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
  */
 interface ThemeManipulatorInterface
 {
     /**
      * Creates a theme.
-     * 
+     *
      * @param ThemeInterface $theme
      */
     function install(ThemeInterface $theme);
-    
+
     /**
      * Deletes a theme.
-     * 
+     *
      * @param ThemeInterface $theme
      */
     function uninstall(ThemeInterface $theme);
-    
+
     /**
      * Enable a theme.
-     * 
+     *
      * @param ThemeInterface $theme
      */
     function enable(ThemeInterface $theme);
-    
+
     /**
      * Disable a theme.
-     * 
+     *
      * @param ThemeInterface $theme
      */
     function disable(ThemeInterface $theme);
-    
-    /**
-     * Activates theme.
-     * 
-     * @param ThemeInterface $theme
-     */
-    function activate(ThemeInterface $theme);
 }

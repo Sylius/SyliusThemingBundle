@@ -9,18 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Sylius\Bundle\ThemingBundle\Manipulator;
+namespace Sylius\Bundle\ThemingBundle\Resolver;
 
 use Sylius\Bundle\ThemingBundle\Cache\CacheInterface;
 use Sylius\Bundle\ThemingBundle\Model\ThemeInterface;
 use Sylius\Bundle\ThemingBundle\Model\ThemeManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Theme manipulator.
+ * Static theming, configured through webinterface.
  *
  * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
  */
-class ThemeManipulator implements ThemeManipulatorInterface
+class StaticThemeResolver implements ThemeResolverInterface
 {
     /**
      * Theme manager.
@@ -37,10 +38,8 @@ class ThemeManipulator implements ThemeManipulatorInterface
     protected $cache;
 
     /**
-     * Constructor.
-     *
      * @param ThemeManagerInterface $themeManager
-     * @param CacheInterface     $cache
+     * @param CacheInterface        $cache
      */
     public function __construct(ThemeManagerInterface $themeManager, CacheInterface $cache)
     {
@@ -51,40 +50,14 @@ class ThemeManipulator implements ThemeManipulatorInterface
     /**
      * {@inheritdoc}
      */
-    public function install(ThemeInterface $theme)
+    public function resolveActiveTheme(Request $request)
     {
-        $this->themeManager->persistTheme($theme);
-        $this->cache->remove('sylius_theming.themes');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function uninstall(ThemeInterface $theme)
+    public function switchActiveTheme(ThemeInterface $theme)
     {
-        $this->themeManager->removeTheme($theme);
-        $this->cache->remove('sylius_theming.themes');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function enable(ThemeInterface $theme)
-    {
-        $theme->setEnabled(true);
-        $this->themeManager->persistTheme($theme);
-
-        $this->cache->remove('sylius_theming.themes');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function disable(ThemeInterface $theme)
-    {
-        $theme->setEnabled(false);
-        $this->themeManager->persistTheme($theme);
-
-        $this->cache->remove('sylius_theming.themes');
     }
 }

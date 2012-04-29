@@ -18,9 +18,9 @@ namespace Sylius\Bundle\ThemingBundle\EventDispatcher;
  */
 final class SyliusThemingEvents
 {
-    const THEME_ENABLE      = 'sylius_theming.event.theme.enable';
-    const THEME_DISABLE     = 'sylius_theming.event.theme.disable';
-    const THEME_ACTIVATE    = 'sylius_theming.event.theme.activate';
-    const THEME_INSTALL     = 'sylius_theming.event.theme.install';
-    const THEME_UNINSTALL   = 'sylius_theming.event.theme.uninstall';
+    const THEME_ENABLE    = 'sylius_theming.event.theme.enable';
+    const THEME_DISABLE   = 'sylius_theming.event.theme.disable';
+    const THEME_SWITCH    = 'sylius_theming.event.theme.switch';
+    const THEME_INSTALL   = 'sylius_theming.event.theme.install';
+    const THEME_UNINSTALL = 'sylius_theming.event.theme.uninstall';
 }

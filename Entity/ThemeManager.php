@@ -17,7 +17,7 @@ use Sylius\Bundle\ThemingBundle\Model\ThemeInterface;
 use Sylius\Bundle\ThemingBundle\Model\ThemeManager as BaseThemeManager;
 
 /**
- * ORM theme manager.
+ * Doctrine ORM driver theme manager.
  *
  * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
  */
@@ -25,41 +25,42 @@ class ThemeManager extends BaseThemeManager
 {
     /**
      * Entity manager.
-     * 
+     *
      * @var EntityManager
      */
     protected $entityManager;
-    
+
     /**
      * Theme entity repository.
-     * 
+     *
      * @var EntityRepository
      */
     protected $repository;
-    
+
     /**
      * Constructor.
-     * 
+     *
      * @param EntityManager $entityManager
-     * @param string		$class
+     * @param string        $class
      */
     public function __construct(EntityManager $entityManager, $class)
     {
         parent::__construct($class);
-        
+
         $this->entityManager = $entityManager;
         $this->repository = $entityManager->getRepository($this->getClass());
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function createTheme()
     {
         $class = $this->getClass();
+
         return new $class;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -68,7 +69,7 @@ class ThemeManager extends BaseThemeManager
         $this->entityManager->persist($product);
         $this->entityManager->flush();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -77,7 +78,7 @@ class ThemeManager extends BaseThemeManager
         $this->entityManager->remove($product);
         $this->entityManager->flush();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -85,7 +86,7 @@ class ThemeManager extends BaseThemeManager
     {
         return $this->repository->find($id);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -93,7 +94,7 @@ class ThemeManager extends BaseThemeManager
     {
         return $this->repository->findOneBy($criteria);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -101,7 +102,7 @@ class ThemeManager extends BaseThemeManager
     {
         return $this->repository->findAll();
     }
-    
+
     /**
      * {@inheritdoc}
      */

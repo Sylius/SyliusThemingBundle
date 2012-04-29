@@ -11,8 +11,8 @@
 
 namespace Sylius\Bundle\ThemingBundle\EventDispatcher\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use Sylius\Bundle\ThemingBundle\Model\ThemeInterface;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Theme filter event.
@@ -23,16 +23,26 @@ class FilterThemeEvent extends Event
 {
     /**
      * Theme.
-     * 
+     *
      * @var ThemeInterface
      */
     protected $theme;
-    
+
+    /**
+     * Constructor.
+     *
+     * @param ThemeInterface $theme
+     */
     public function __construct(ThemeInterface $theme)
     {
         $this->theme = $theme;
     }
-    
+
+    /**
+     * Get theme.
+     *
+     * @return ThemeInterface
+     */
     public function getTheme()
     {
         return $this->theme;

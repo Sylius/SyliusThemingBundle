@@ -11,21 +11,22 @@
 
 namespace Sylius\Bundle\ThemingBundle\DependencyInjection;
 
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Sylius\Bundle\ThemingBundle\SyliusThemingBundle;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Authentification extension.
- * 
+ * Sylius theming extension.
+ *
  * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
  */
 class SyliusThemingExtension extends Extension
 {
     /**
-     * @see Extension/Symfony\Component\DependencyInjection\Extension.ExtensionInterface::load()
+     * {@inheritdoc}
      */
     public function load(array $config, ContainerBuilder $container)
     {
@@ -33,46 +34,48 @@ class SyliusThemingExtension extends Extension
         $configuration = new Configuration();
 
         $config = $processor->processConfiguration($configuration, $config);
-
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config/container'));
 
-        if (!in_array($config['driver'], array('ORM'))) {
+        if (!in_array($config['driver'], SyliusThemingBundle::getSupportedDrivers())) {
             throw new \InvalidArgumentException(sprintf('Driver "%s" is unsupported for this extension.', $config['driver']));
         }
-        
-        if (!in_array($config['engine'], array('php', 'twig'))) {
-            throw new \InvalidArgumentException(sprintf('Engine "%s" is unsupported for this extension.', $config['engine']));
-        }
-        
+
         $loader->load(sprintf('driver/%s.xml', $config['driver']));
-        
+
         $container->setParameter('sylius_theming.driver', $config['driver']);
         $container->setParameter('sylius_theming.engine', $config['engine']);
-        
+
         $container->setParameter('sylius_theming.directory', $container->getParameter('kernel.root_dir') . '/Resources/themes');
 
         $configurations = array(
             'controllers',
-            'manipulators',
             'listeners',
+            'manipulators',
             'theming'
         );
-        
+
         foreach ($configurations as $basename) {
             $loader->load(sprintf('%s.xml', $basename));
         }
 
         $this->remapParametersNamespaces($config['classes'], $container, array(
-            'model'          => 'sylius_theming.model.%s.class',
-            'manipulator'    => 'sylius_theming.manipulator.%s.class',
+            'manipulator' => 'sylius_theming.manipulator.%s.class',
+            'model'       => 'sylius_theming.model.%s.class',
         ));
-        
+
         $this->remapParametersNamespaces($config['classes']['controller'], $container, array(
-            'backend'     => 'sylius_theming.controller.backend.%s.class',
-            'frontend'    => 'sylius_theming.controller.frontend.%s.class'
+            'backend'  => 'sylius_theming.controller.backend.%s.class',
+            'frontend' => 'sylius_theming.controller.frontend.%s.class'
         ));
     }
-    
+
+    /**
+     * Remap parameters.
+     *
+     * @param array            $config
+     * @param ContainerBuilder $container
+     * @param array            $map
+     */
     protected function remapParameters(array $config, ContainerBuilder $container, array $map)
     {
         foreach ($map as $name => $paramName) {
@@ -82,6 +85,13 @@ class SyliusThemingExtension extends Extension
         }
     }
 
+    /**
+     * Remap parameters namespaces.
+     *
+     * @param array            $config
+     * @param ContainerBuilder $container
+     * @param array            $namespaces
+     */
     protected function remapParametersNamespaces(array $config, ContainerBuilder $container, array $namespaces)
     {
         foreach ($namespaces as $ns => $map) {
