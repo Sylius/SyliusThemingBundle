@@ -38,6 +38,13 @@ class StaticThemeResolver implements ThemeResolverInterface
     protected $cache;
 
     /**
+     * Active theme.
+     *
+     * @var ThemeInterface
+     */
+    protected $activeTheme;
+
+    /**
      * @param ThemeManagerInterface $themeManager
      * @param CacheInterface        $cache
      */
@@ -52,6 +59,14 @@ class StaticThemeResolver implements ThemeResolverInterface
      */
     public function resolveActiveTheme(Request $request)
     {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getActiveTheme()
+    {
+        return $this->activeTheme;
     }
 
     /**

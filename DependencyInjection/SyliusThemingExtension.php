@@ -45,7 +45,7 @@ class SyliusThemingExtension extends Extension
         $container->setParameter('sylius_theming.driver', $config['driver']);
         $container->setParameter('sylius_theming.engine', $config['engine']);
 
-        $container->setParameter('sylius_theming.directory', $container->getParameter('kernel.root_dir') . '/Resources/themes');
+        $container->setParameter('sylius_theming.dir', $container->getParameterBag()->resolveValue($config['dir']));
 
         $configurations = array(
             'controllers',

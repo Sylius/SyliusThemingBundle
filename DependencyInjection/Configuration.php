@@ -38,6 +38,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('driver')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('engine')->defaultValue('twig')->cannotBeEmpty()->end()
+                ->scalarNode('dir')->defaultValue('%kernel.root_dir%/Resources/themes')->cannotBeEmpty()->end()
             ->end();
 
         $this->addClassesSection($rootNode);

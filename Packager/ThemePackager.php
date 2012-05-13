@@ -19,60 +19,99 @@ use Symfony\Component\Finder\Finder;
  *
  * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
  */
-class ThemePackager
+class ThemePackager implements ThemePackagerInterface
 {
     /**
      * Directory where themes are stored.
-     * 
+     *
      * @var string
      */
-    protected $packsDir;
-    
+    protected $themingDir;
+
     /**
-     * @param string $packsDir
+     * Extractors.
+     *
+     * @var array Array of PackageExtractorInterface
      */
-    public function __construct($packsDir)
+    protected $extractors;
+
+    /**
+     * Downloaders.
+     *
+     * @var array Array of PackageDownloaderInterface
+     */
+    protected $downloaders;
+
+    /**
+     * @param string $themingDir
+     */
+    public function __construct($themingDir)
     {
-        $this->packsDir = $packsDir;
+        $this->themingdir = $themingDir;
     }
-    
+
     /**
-     * Returns all theme packs that were not installed.
-     * 
-     * @param array $themes
+     * {@inheritdoc}
      */
-    public function findPacks(array $themes)
+    public function findPackages()
     {
-        $finder = new Finder();
-        $packsIterator = $finder->directories()->depth(0)->in($this->packsDir)->getIterator();
-        
-        $packs = array();
-        $installedThemesPaths = array();
-        
-        foreach ($themes as $theme) {
-            if (!$theme instanceof ThemeInterface) {
-                throw new InvalidArgumentException('Themes supplied to packages must implement Sylius\Bundle\ThemingBundle\Model\ThemeInterface');
-            }
-            
-            $installedThemesPaths[] = $this->packsDir . '/' . $theme->getLogicalName();
-        }
-        
-        foreach ($packsIterator as $path) {
-            if (!in_array($path, $installedThemesPaths)) {
-                $packs[] = $this->createPack($path);
-            }
-        }
-        
-        return $packs;
     }
-    
+
     /**
-     * Returns theme pack instance based on path.
-     * 
-     * @param string $path
+     * {@inheritdoc}
      */
-    public function createPack($path)
+    public function findPackage($id)
     {
-        return new ThemePack($path);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removePackage($package)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function downloadPackage($url)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function extractPackage($package)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function registerDownloader(PackageDownloaderInterface $downloader)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function registerExtractor(PackageExtractorInterface $extractor)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getThemingDir()
+    {
+        return $this->themingDir;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setThemingDir($themingDir)
+    {
+        $this->themingDir = $themingDir;
     }
 }

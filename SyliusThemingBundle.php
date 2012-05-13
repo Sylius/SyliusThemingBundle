@@ -27,6 +27,7 @@ class SyliusThemingBundle extends Bundle
     const DRIVER_DOCTRINE_ORM         = 'doctrine/orm';
     const DRIVER_DOCTRINE_MONGODB_ODM = 'doctrine/mongodb-odm';
     const DRIVER_DOCTRINE_COUCHDB_ODM = 'doctrine/couchdb-odm';
+    const DRIVER_PROPEL2              = 'propel2';
     const DRIVER_PROPEL               = 'propel';
 
     /**

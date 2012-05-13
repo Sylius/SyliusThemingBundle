@@ -5,16 +5,12 @@ sylius_theming_backend_theme_switch:
     pattern: /{id}/switch
     defaults: { _controller: sylius_theming.controller.backend.theme:switchAction }
 
-sylius_theming_backend_theme_enable:
-    pattern: /{id}/enable
-    defaults: { _controller: sylius_theming.controller.backend.theme:enableAction }
-
-sylius_theming_backend_theme_disable:
-    pattern: /{id}/disable
-    defaults: { _controller: sylius_theming.controller.backend.theme:disableAction }
+sylius_theming_backend_theme_toggle:
+    pattern: /{id}/toggle
+    defaults: { _controller: sylius_theming.controller.backend.theme:toggleAction }
 
 sylius_theming_backend_theme_install:
-    pattern: /{path}/install
+    pattern: /{id}/install
     defaults: { _controller: sylius_theming.controller.backend.theme:installAction }
 
 sylius_theming_backend_theme_uninstall:

@@ -1,5 +1,7 @@
-SyliusThemingBundle
+SyliusThemingBundle [![Build status...](https://secure.travis-ci.org/Sylius/SyliusThemingBundle.png)](http://travis-ci.org/Sylius/SyliusThemingBundle)
 ===================
+
+**WARNING** Not working prototype.
 
 Theming featuture for your Symfony2 applications. 
 You can manage themes through a simple and customizable web interface. 
@@ -8,19 +10,6 @@ Interfaces allow you to implement custom loaders, packagers, everything is custo
 Two theme resolvers supported, you can define theme in backend or allow users to switch between enabled themes.
 
 **This bundle is compatible only with 2.1.x branch of Symfony2**.
-
-Features
---------
-
-### Planned or in progress
-
-* Updating bundle to work with 2.1 and master of Symfony.
-* More unit tests. [![Build status...](https://secure.travis-ci.org/Sylius/SyliusThemingBundle.png)](http://travis-ci.org/Sylius/SyliusThemingBundle)
-* Full documentation.
-* Doctrine MongoDB ODM driver. `*`
-* Propel driver. `*`
-
-`*` - wishlist, would love to see a contribution.
 
 Sylius
 ------

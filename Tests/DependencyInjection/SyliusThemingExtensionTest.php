@@ -11,16 +11,21 @@
 
 namespace Sylius\Bundle\ThemingBundle\Tests\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Sylius\Bundle\ThemingBundle\DependencyInjection\SyliusThemingExtension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Parser;
 
+/**
+ * Dependency injection container extension test.
+ *
+ * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
+ */
 class SyliusThemingExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
-    public function testUserLoadThrowsExceptionUnlessDriverSet()
+    public function testLoadThrowsExceptionUnlessDriverSet()
     {
         $loader = new SyliusThemingExtension();
         $config = $this->getEmptyConfig();
@@ -35,12 +40,14 @@ class SyliusThemingExtensionTest extends \PHPUnit_Framework_TestCase
      */
     protected function getEmptyConfig()
     {
-        $yaml = <<<EOF
-driver: ORM
-classes:
-    model:
-        theme: Sylius\Bundle\ThemingBundle\Entity\Theme
+        $yaml =
+<<<EOF
+    driver: ORM
+    classes:
+        model:
+            theme: Sylius\Bundle\ThemingBundle\Entity\Theme
 EOF;
+
         $parser = new Parser();
 
         return $parser->parse($yaml);

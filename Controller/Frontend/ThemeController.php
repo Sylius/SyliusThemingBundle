@@ -14,8 +14,9 @@ namespace Sylius\Bundle\ThemingBundle\Controller\Frontend;
 use Sylius\Bundle\ThemingBundle\EventDispatcher\Event\FilterThemeEvent;
 use Sylius\Bundle\ThemingBundle\EventDispatcher\SyliusThemingEvents;
 use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -42,11 +43,12 @@ class ThemeController extends ContainerAware
     /**
      * Switch the theme.
      *
-     * @param mixed $id Theme id
+     * @param Request $request
+     * @param mixed   $id Theme id
      *
      * @return Response
      */
-    public function switchAction($id)
+    public function switchAction(Request $request, $id)
     {
         if (!$theme = $this->container->get('sylius_theming.manager.theme')->findTheme($id)) {
             throw new NotFoundHttpException('Requested theme does not exist');
@@ -54,6 +56,8 @@ class ThemeController extends ContainerAware
 
         $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_SWITCH, new FilterThemeEvent($theme));
         $this->container->get('sylius_theming.resolver')->switchTheme($theme);
+
+        return new RedirectResponse($request->headers->get('referer'));
     }
 
     /**

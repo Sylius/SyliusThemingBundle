@@ -9,8 +9,13 @@
  * file that was distributed with this source code.
  */
 
-if (!file_exists($file = __DIR__.'/../vendor/.composer/autoload.php')) {
-    die("Please install dev dependencies using Composer to run the test suite. \n");
-} else {
-    require_once $file;
+namespace Sylius\Bundle\ThemingBundle\Packager;
+
+/**
+ * Theme package interface.
+ *
+ * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
+ */
+interface ThemePackageInterface
+{
 }

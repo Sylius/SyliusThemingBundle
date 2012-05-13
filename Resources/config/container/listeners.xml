@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- 
+<!--
 
  This file is part of the Sylius package.
 
  (c) Paweł Jędrzejewski
- 
+
  For the full copyright and license information, please view the LICENSE
  file that was distributed with this source code.
 
 -->
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+                               http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
 
-	<parameters>
-		<parameter key="sylius_theming.listener.request.class">Sylius\Bundle\ThemingBundle\EventDispatcher\Listener\RequestListener</parameter>
-	</parameters>
+    <parameters>
+        <parameter key="sylius_theming.listener.request.class">Sylius\Bundle\ThemingBundle\EventDispatcher\Listener\RequestListener</parameter>
+    </parameters>
 
     <services>
         <service id="sylius_theming.listener.request" class="%sylius_theming.listener.request.class%">
-        	<argument type="service" id="sylius_theming.resolver" />
-        	<argument type="service" id="liip_theme.active_theme" />
+            <argument type="service" id="sylius_theming.resolver" />
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="10" />
         </service>
     </services>

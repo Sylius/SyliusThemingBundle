@@ -15,6 +15,8 @@ use Sylius\Bundle\ThemingBundle\EventDispatcher\Event\FilterThemeEvent;
 use Sylius\Bundle\ThemingBundle\EventDispatcher\SyliusThemingEvents;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -59,20 +61,25 @@ class ThemeController extends ContainerAware
     /**
      * Installs a new theme from package.
      *
-     * @param string $hash
+     * @param string $id Package identifier
      *
      * @return Response
      */
-    public function installAction($hash)
+    public function installAction($id)
     {
-        $package = $this->container->get('sylius_theming.packager')->createPackages($hash);
+        $package = $this->container->get('sylius_theming.packager')->findPackage($id);
+
+        if (!$package) {
+            throw new NotFoundHttpException('Requested theme package does not exist');
+        }
+
         $theme = $package->buildTheme($this->container->get('sylius_theming.manager.theme')->createTheme());
 
         if (0 === count($this->container->get('validator')->validate($theme))) {
             $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_INSTALL, new FilterThemeEvent($theme));
             $this->container->get('sylius_theming.manipulator.theme')->install($theme);
 
-            return new RedirectResponse($this->container->get('router')->generate('sylius_theming_backend_theme_list'));
+            return $this->redirectToThemeList();
         }
     }
 
@@ -90,7 +97,7 @@ class ThemeController extends ContainerAware
         $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_UNINSTALL, new FilterThemeEvent($theme));
         $this->container->get('sylius_theming.manipulator.theme')->uninstall($theme);
 
-        return new RedirectResponse($this->container->get('router')->generate('sylius_theming_backend_theme_list'));
+        return $this->redirectToThemeList();
     }
 
     /**
@@ -107,7 +114,7 @@ class ThemeController extends ContainerAware
         $this->container->get('event_dispatcher')->dispatch(SyliusThemingEvents::THEME_SWITCH, new FilterThemeEvent($theme));
         $this->container->get('sylius_theming.resolver')->switchTheme($theme);
 
-        return new RedirectResponse($this->container->get('request')->headers->get('referer'));
+        return $this->redirectReferer();
     }
 
     /**
@@ -129,7 +136,16 @@ class ThemeController extends ContainerAware
             $this->container->get('sylius_theming.manipulator.theme')->enable($theme);
         }
 
-        return new RedirectResponse($this->container->get('request')->headers->get('referer'));
+        return $this->redirectReferer();
+    }
+
+    /**
+     * Download theme package.
+     *
+     * @return Response
+     */
+    public function downloadAction()
+    {
     }
 
     /**
@@ -149,6 +165,30 @@ class ThemeController extends ContainerAware
         }
 
         return $theme;
+    }
+
+    /**
+     * Safely redirect to referer.
+     *
+     * @return RedirectResponse
+     */
+    public function redirectReferer()
+    {
+        if (null !== $url = $this->container->get('request')->headers->get('referer')) {
+            return new RedirectResponse($url);
+        }
+
+        return $this->redirectToThemeList();
+    }
+
+    /**
+     * Redirect to theme list.
+     *
+     * @return RedirectResponse
+     */
+    public function redirectToThemeList()
+    {
+        return new RedirectResponse($this->container->get('router')->generate('sylius_theming_backend_theme_list'));
     }
 
     /**

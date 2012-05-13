@@ -22,9 +22,10 @@
             <generator strategy="AUTO" />
         </id>
         <field name="name" column="name" type="string" />
+        <field name="author" column="author" type="string" />
+        <field name="description" column="description" type="text" />
         <field name="logicalName" column="logical_name" type="string" />
         <field name="version" column="version" type="string" />
-        <field name="description" column="description" type="text" />
         <field name="enabled" column="enabled" type="boolean" />
         <field name="installedAt" column="installed_at" type="datetime" />
     </entity>

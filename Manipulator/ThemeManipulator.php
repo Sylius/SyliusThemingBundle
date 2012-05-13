@@ -54,7 +54,7 @@ class ThemeManipulator implements ThemeManipulatorInterface
     public function install(ThemeInterface $theme)
     {
         $this->themeManager->persistTheme($theme);
-        $this->cache->remove('sylius_theming.themes');
+        $this->cache->remove('installed');
     }
 
     /**
@@ -63,7 +63,7 @@ class ThemeManipulator implements ThemeManipulatorInterface
     public function uninstall(ThemeInterface $theme)
     {
         $this->themeManager->removeTheme($theme);
-        $this->cache->remove('sylius_theming.themes');
+        $this->cache->remove('installed');
     }
 
     /**
@@ -73,8 +73,7 @@ class ThemeManipulator implements ThemeManipulatorInterface
     {
         $theme->setEnabled(true);
         $this->themeManager->persistTheme($theme);
-
-        $this->cache->remove('sylius_theming.themes');
+        $this->cache->remove('installed');
     }
 
     /**
@@ -84,7 +83,6 @@ class ThemeManipulator implements ThemeManipulatorInterface
     {
         $theme->setEnabled(false);
         $this->themeManager->persistTheme($theme);
-
-        $this->cache->remove('sylius_theming.themes');
+        $this->cache->remove('installed');
     }
 }

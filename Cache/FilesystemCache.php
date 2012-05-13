@@ -18,18 +18,34 @@ namespace Sylius\Bundle\ThemingBundle\Cache;
  */
 class FilesystemCache implements CacheInterface
 {
+    /**
+     * Cache dir.
+     *
+     * @var string
+     */
     private $dir;
 
+    /**
+     * Constructor.
+     *
+     * @param string $dir
+     */
     public function __construct($dir)
     {
         $this->dir = $dir;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function has($key)
     {
         return file_exists($this->dir.'/'.$key);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function get($key)
     {
         $path = $this->dir.'/'.$key;
@@ -38,9 +54,12 @@ class FilesystemCache implements CacheInterface
             throw new \RuntimeException(sprintf('Unable to load cache file "%s".', $path));
         }
 
-        return unserialize(file_get_contents($path));
+        return json_decode(file_get_contents($path));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function set($key, $value)
     {
         if (!is_dir($this->dir) && false === @mkdir($this->dir, 0777, true)) {
@@ -49,11 +68,14 @@ class FilesystemCache implements CacheInterface
 
         $path = $this->dir.'/'.$key;
 
-        if (false === @file_put_contents($path, serialize($value))) {
+        if (false === @file_put_contents($path, json_encode($value))) {
             throw new \RuntimeException(sprintf('Unable to write cache file "%s".', $path));
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function remove($key)
     {
         $path = $this->dir.'/'.$key;

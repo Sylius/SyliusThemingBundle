@@ -11,16 +11,19 @@
 
 namespace Sylius\Bundle\ThemingBundle\Packager;
 
-use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * Theme pack configuration.
+ * Theme package configuration schema.
  *
  * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
  */
 class Configuration implements ConfigurationInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
@@ -30,10 +33,13 @@ class Configuration implements ConfigurationInterface
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('name')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('author')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('version')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('description')->defaultValue('...')->end()
+
+                ->scalarNode('extends')->end()
             ->end();
-            
+
         return $treeBuilder;
     }
 }
